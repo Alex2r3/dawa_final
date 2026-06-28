@@ -147,7 +147,7 @@ export default function Challenge() {
     return (
       <div className="max-w-md mx-auto text-center py-12 space-y-4">
         <AlertCircle className="mx-auto text-danger" size={48} />
-        <h2 className="text-xl font-bold text-white">Nivel no encontrado</h2>
+        <h2 className="text-xl font-bold text-text">Nivel no encontrado</h2>
         <button onClick={() => navigate('/worlds')} className="btn-primary">Volver a Mundos</button>
       </div>
     )
@@ -171,19 +171,19 @@ export default function Challenge() {
             <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 border border-primary/20 text-primary">
               MUNDO: {level.worlds?.nombre}
             </div>
-            <h1 className="text-3xl font-black text-white">{level.titulo}</h1>
+            <h1 className="text-3xl font-black text-text">{level.titulo}</h1>
             <p className="text-muted max-w-md mx-auto text-sm">{level.descripcion}</p>
 
             {/* Rewards info */}
             <div className="flex justify-center gap-6 py-4">
               <div className="bg-card/40 border border-border p-4 rounded-2xl w-28">
                 <Zap className="mx-auto text-accent mb-1" size={24} />
-                <span className="text-lg font-black text-white">+{level.xp_recompensa}</span>
+                <span className="text-lg font-black text-text">+{level.xp_recompensa}</span>
                 <p className="text-muted text-xs">XP Base</p>
               </div>
               <div className="bg-card/40 border border-border p-4 rounded-2xl w-28">
                 <Coins className="mx-auto text-yellow-400 mb-1" size={24} />
-                <span className="text-lg font-black text-white">+{level.monedas_recompensa}</span>
+                <span className="text-lg font-black text-text">+{level.monedas_recompensa}</span>
                 <p className="text-muted text-xs">Monedas</p>
               </div>
             </div>
@@ -213,26 +213,33 @@ export default function Challenge() {
 
       {status === 'playing' && !challengesLoading && currentChallenge && (
         <div className="space-y-6">
-          {/* Header */}
-          <div className="flex items-center justify-between gap-4">
+          {/* Progress bar header */}
+          <div className="flex items-center gap-4">
             <button
               onClick={() => {
                 if (window.confirm('¿Seguro que quieres salir? Perderás el progreso de esta sesión.')) {
                   navigate(`/worlds/${level.world_id}`)
                 }
               }}
-              className="text-muted hover:text-text transition-colors"
+              className="text-muted hover:text-text transition-colors flex-shrink-0"
             >
               <ChevronLeft size={24} />
             </button>
-            <div className="flex-1 bg-border h-2 rounded-full overflow-hidden">
+            <div className="flex-1 h-2.5 rounded-full overflow-hidden" style={{ background: 'rgb(var(--rpg-border))' }}>
               <div
-                className="h-full bg-primary transition-all duration-300"
-                style={{ width: `${((currentIndex) / challenges.length) * 100}%` }}
+                className="h-full rounded-full transition-all duration-500"
+                style={{
+                  width: `${(currentIndex / challenges.length) * 100}%`,
+                  background: 'linear-gradient(90deg, #58A6FF, #BC8CFF)',
+                  boxShadow: '0 0 8px rgba(88,166,255,0.6)',
+                }}
               />
             </div>
-            <span className="text-xs font-bold text-muted tabular-nums">
-              {currentIndex + 1} / {challenges.length}
+            <span
+              className="text-xs font-black tabular-nums flex-shrink-0"
+              style={{ fontFamily: '"Press Start 2P", monospace', fontSize: '8px', color: 'rgb(var(--rpg-muted))' }}
+            >
+              {currentIndex + 1}/{challenges.length}
             </span>
           </div>
 
@@ -248,10 +255,20 @@ export default function Challenge() {
 
           {/* Question Card */}
           <div className="glass-card p-6 space-y-4">
-            <span className="badge badge-primary uppercase text-xs">
-              Reto: {currentChallenge.tipo}
+            <span
+              className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase"
+              style={{
+                background: 'rgba(88,166,255,0.1)',
+                border: '1px solid rgba(88,166,255,0.3)',
+                color: '#58A6FF',
+                fontFamily: '"Press Start 2P", monospace',
+                fontSize: '7px',
+                letterSpacing: '0.5px',
+              }}
+            >
+              {currentChallenge.tipo}
             </span>
-            <h2 className="text-lg font-bold text-white leading-relaxed">
+            <h2 className="text-lg font-bold text-text leading-relaxed">
               {currentChallenge.pregunta}
             </h2>
 
@@ -381,7 +398,7 @@ export default function Challenge() {
           <div className="absolute inset-0 bg-gradient-to-b from-success/5 to-transparent" />
           <div className="relative z-10 space-y-6">
             <span className="text-6xl block">🎉</span>
-            <h1 className="text-3xl font-black text-white">¡Nivel Completado!</h1>
+            <h1 className="text-3xl font-black text-text">¡Nivel Completado!</h1>
             <p className="text-muted text-sm max-w-md mx-auto">
               Has respondido {correctCount} de {challenges.length} desafíos de forma correcta en {level.titulo}.
             </p>

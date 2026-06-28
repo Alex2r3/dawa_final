@@ -54,12 +54,12 @@ export default function Login() {
           <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-black text-3xl shadow-2xl shadow-primary/40 mb-4 animate-float">
             CQ
           </div>
-          <h1 className="text-3xl font-black gradient-text">CodeQuest</h1>
+          <h1 className="text-3xl font-black gradient-text">CodeRealm</h1>
           <p className="text-muted mt-1 text-sm">Aprende programación jugando 🎮</p>
         </div>
 
         <div className="glass-card p-8 border border-border/60 shadow-2xl">
-          <h2 className="text-xl font-bold text-white mb-1">Bienvenido de vuelta</h2>
+          <h2 className="text-xl font-bold text-text mb-1">Bienvenido de vuelta</h2>
           <p className="text-muted text-sm mb-6">Continúa tu aventura de código</p>
 
           {error && (

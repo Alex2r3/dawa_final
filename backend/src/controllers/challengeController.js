@@ -24,13 +24,12 @@ exports.getChallengesByLevel = async (req, res, next) => {
 
     const { data: challenges, error } = await supabase
       .from('challenges')
-      .select('id, level_id, tipo, pregunta, codigo, metadata_json, orden')
+      .select('id, level_id, tipo, pregunta, codigo, respuesta_correcta, metadata_json, orden')
       .eq('level_id', levelId)
       .order('orden', { ascending: true });
 
     if (error) throw error;
 
-    // Never send respuesta_correcta to client before answering
     res.json({ challenges });
   } catch (err) {
     next(err);

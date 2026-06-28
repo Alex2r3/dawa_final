@@ -5,7 +5,7 @@ export default function SkeletonLoader({ fullPage = false, count = 3, className 
         <div className="flex flex-col items-center gap-4">
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary animate-pulse" />
           <div className="h-2 w-32 bg-border rounded-full animate-pulse" />
-          <p className="text-muted text-sm">Cargando CodeQuest...</p>
+          <p className="text-muted text-sm">Cargando CodeRealm...</p>
         </div>
       </div>
     )

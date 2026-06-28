@@ -1,9 +1,7 @@
 import { useState, useRef } from 'react'
 import { gsap } from 'gsap'
-import { CheckCircle2, XCircle } from 'lucide-react'
 
 export default function MultipleChoice({ challenge, onAnswer }) {
-  const [selected, setSelected] = useState(null)
   const [answered, setAnswered] = useState(false)
   const optionsRef = useRef(null)
 
@@ -11,20 +9,46 @@ export default function MultipleChoice({ challenge, onAnswer }) {
 
   const handleSelect = (opcion) => {
     if (answered) return
-    setSelected(opcion)
     setAnswered(true)
 
-    const isCorrect = opcion.trim().toLowerCase() === challenge.respuesta_correcta?.trim().toLowerCase()
+    const clean = (s) => (s || '').trim().toLowerCase()
+    const correctVal = clean(challenge.respuesta_correcta)
+    const isCorrect = clean(opcion) === correctVal
 
-    // Animate feedback
     const btns = optionsRef.current?.querySelectorAll('button')
     btns?.forEach(btn => {
-      const val = btn.dataset.value
-      if (val === challenge.respuesta_correcta) {
-        gsap.to(btn, { borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.15)', duration: 0.3 })
-      } else if (val === opcion && !isCorrect) {
-        gsap.to(btn, { borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,0.1)', duration: 0.3 })
-        gsap.fromTo(btn, { x: 0 }, { x: [-8, 8, -6, 6, 0], duration: 0.4, ease: 'power2.inOut' })
+      const val = clean(btn.dataset.value)
+      const isCorrectBtn = val === correctVal
+      const isSelectedWrong = val === clean(opcion) && !isCorrect
+
+      if (isCorrectBtn) {
+        // ✅ SOLID GREEN fill — fully opaque
+        gsap.to(btn, {
+          borderColor: '#3FB950',
+          backgroundColor: '#3FB950',
+          color: '#fff',
+          scale: val === clean(opcion) ? 1.03 : 1,
+          duration: 0.35,
+          ease: 'back.out(1.5)',
+        })
+        const badge = btn.querySelector('[data-badge]')
+        if (badge) gsap.to(badge, { borderColor: 'rgba(255,255,255,0.4)', backgroundColor: 'rgba(255,255,255,0.2)', color: '#fff', duration: 0.3 })
+      } else if (isSelectedWrong) {
+        // ❌ SOLID RED fill — fully opaque
+        gsap.to(btn, {
+          borderColor: '#F85149',
+          backgroundColor: '#F85149',
+          color: '#fff',
+          duration: 0.3,
+          ease: 'power2.out',
+        })
+        const badge = btn.querySelector('[data-badge]')
+        if (badge) gsap.to(badge, { borderColor: 'rgba(255,255,255,0.4)', backgroundColor: 'rgba(255,255,255,0.2)', color: '#fff', duration: 0.3 })
+        // Shake
+        gsap.fromTo(btn, { x: 0 }, { x: [-10, 10, -7, 7, -4, 4, 0], duration: 0.5, ease: 'none' })
+      } else {
+        // Dim the other buttons
+        gsap.to(btn, { opacity: 0.35, duration: 0.3 })
       }
     })
 
@@ -39,14 +63,20 @@ export default function MultipleChoice({ challenge, onAnswer }) {
           data-value={op}
           onClick={() => handleSelect(op)}
           disabled={answered}
-          className="p-4 rounded-xl border border-border bg-card/60 text-left text-sm font-medium text-text
-                     hover:border-primary/50 hover:bg-primary/5 transition-all duration-200
-                     disabled:cursor-not-allowed flex items-center gap-3 group"
+          className="relative p-4 rounded-xl border-2 border-border bg-card/70 text-left text-sm font-bold text-text
+                     hover:border-primary/60 hover:bg-primary/5 hover:shadow-lg hover:shadow-primary/10
+                     transition-all duration-200 disabled:cursor-not-allowed flex items-center gap-3 group"
         >
-          <span className="w-7 h-7 rounded-lg bg-border flex items-center justify-center text-xs font-bold text-muted group-hover:text-primary flex-shrink-0">
+          {/* Letter badge */}
+          <span
+            data-badge
+            className="w-8 h-8 rounded-lg border border-border bg-surface flex items-center justify-center
+                       text-xs font-black text-muted group-hover:text-primary group-hover:border-primary/40
+                       flex-shrink-0 transition-colors font-mono"
+          >
             {String.fromCharCode(65 + i)}
           </span>
-          {op}
+          <span className="leading-snug">{op}</span>
         </button>
       ))}
     </div>

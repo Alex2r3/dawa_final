@@ -5,8 +5,7 @@ import { lazy, Suspense } from 'react'
 import Layout    from '../components/layout/Layout'
 import SkeletonLoader from '../components/ui/SkeletonLoader'
 
-const Login        = lazy(() => import('../pages/Login'))
-const Register     = lazy(() => import('../pages/Register'))
+const AuthPage     = lazy(() => import('../pages/AuthPage'))
 const Dashboard    = lazy(() => import('../pages/Dashboard'))
 const Worlds       = lazy(() => import('../pages/Worlds'))
 const Levels       = lazy(() => import('../pages/Levels'))
@@ -35,8 +34,8 @@ export default function AppRouter() {
       <Suspense fallback={<SkeletonLoader fullPage />}>
         <Routes>
           {/* Public routes */}
-          <Route path="/login"    element={<PublicRoute><Login /></PublicRoute>} />
-          <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+          <Route path="/login"    element={<PublicRoute><AuthPage defaultMode="login" /></PublicRoute>} />
+          <Route path="/register" element={<PublicRoute><AuthPage defaultMode="register" /></PublicRoute>} />
 
           {/* Protected routes inside Layout */}
           <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>

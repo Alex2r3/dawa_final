@@ -83,7 +83,7 @@ export default function AchievementModal({ achievement, onClose }) {
           ✨ Logro Desbloqueado
         </span>
 
-        <h2 className="text-2xl font-black text-white mb-2">{achievement.nombre}</h2>
+        <h2 className="text-2xl font-black text-text mb-2">{achievement.nombre}</h2>
         <p className="text-muted text-sm mb-6">{achievement.descripcion}</p>
 
         {/* Rewards */}

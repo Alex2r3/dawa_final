@@ -23,7 +23,7 @@ export default function NotFound() {
           <h1 className="text-6xl font-black text-white font-mono tracking-widest">404</h1>
           <h2 className="text-xl font-bold text-white uppercase tracking-wider">Sistema Corrupto</h2>
           <p className="text-muted text-sm max-w-xs mx-auto">
-            El archivo o ruta que estás buscando no se encuentra en la base de datos de CodeQuest.
+            El archivo o ruta que estás buscando no se encuentra en la base de datos de CodeRealm.
           </p>
         </div>
 

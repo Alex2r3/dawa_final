@@ -14,11 +14,6 @@ export default function PredictOutput({ challenge, onAnswer }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {challenge.codigo && (
-        <div className="code-block text-sm">
-          {challenge.codigo}
-        </div>
-      )}
       <div>
         <label className="text-xs text-muted font-medium mb-2 block">¿Cuál es la salida?</label>
         <textarea

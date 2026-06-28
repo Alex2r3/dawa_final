@@ -1,117 +1,336 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800;900&family=Fira+Code:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ── CSS variables ────────────────────────────────────────────── */
+:root {
+  --rpg-bg: 13 17 23;
+  --rpg-surface: 22 27 34;
+  --rpg-card: 28 35 51;
+  --rpg-border: 48 54 61;
+  --rpg-primary: 88 166 255;
+  --rpg-secondary: 188 140 255;
+  --rpg-accent: 247 129 102;
+  --rpg-success: 63 185 80;
+  --rpg-danger: 248 81 73;
+  --rpg-warning: 227 179 65;
+  --rpg-text: 201 209 217;
+  --rpg-muted: 139 148 158;
+}
+
+[data-theme='light'] {
+  --rpg-bg: 232 236 241;
+  --rpg-surface: 241 245 249;
+  --rpg-card: 255 255 255;
+  --rpg-border: 203 213 225;
+  --rpg-primary: 14 116 144;
+  --rpg-secondary: 109 40 217;
+  --rpg-accent: 190 18 60;
+  --rpg-success: 21 128 61;
+  --rpg-danger: 185 28 28;
+  --rpg-warning: 161 98 7;
+  --rpg-text: 15 23 42;
+  --rpg-muted: 100 116 139;
+}
+
 @layer base {
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    background-color: #0f0f1a;
-    color: #e2e8f0;
-    font-family: 'Inter', system-ui, sans-serif;
+    background-color: rgb(var(--rpg-bg));
+    color: rgb(var(--rpg-text));
+    font-family: 'Nunito', 'Inter', system-ui, sans-serif;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: #1a1a2e; }
-  ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+
+  /* RPG Scrollbar */
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--rpg-surface));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgb(var(--rpg-primary)), rgb(var(--rpg-secondary)));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--rpg-primary));
+  }
+
+  /* Selection */
+  ::selection {
+    background: rgba(88, 166, 255, 0.25);
+    color: #fff;
+  }
 }
 
 @layer components {
-  /* Glassmorphism card */
+
+  /* Glass card — RPG style */
   .glass-card {
-    @apply bg-card/80 backdrop-blur-sm border border-border rounded-2xl;
+    @apply backdrop-blur-sm border border-border rounded-2xl;
+    background-color: rgb(var(--rpg-card) / 0.9);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
   }
 
-  /* Button variants */
+  .glass-card:hover {
+    border-color: rgba(88, 166, 255, 0.25);
+  }
+
+  /* Buttons */
   .btn-primary {
-    @apply bg-primary hover:bg-primary/90 text-white font-semibold px-6 py-3 rounded-xl
-           transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-primary/25
-           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+    @apply bg-primary text-bg font-bold px-6 py-3 rounded-xl transition-all duration-200 hover:scale-105 hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+    font-family: 'Nunito', sans-serif;
   }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: rgb(var(--rpg-primary) / 0.85);
+  }
+
   .btn-secondary {
-    @apply bg-surface hover:bg-border text-text font-medium px-6 py-3 rounded-xl
-           border border-border transition-all duration-200 hover:scale-105 active:scale-95;
+    @apply bg-surface hover:bg-border text-text font-medium px-6 py-3 rounded-xl border border-border transition-all duration-200 hover:scale-105 active:scale-95;
   }
+
   .btn-danger {
-    @apply bg-danger/10 hover:bg-danger/20 text-danger font-medium px-4 py-2 rounded-lg
-           border border-danger/30 transition-all duration-200;
+    @apply text-danger font-medium px-4 py-2 rounded-lg transition-all duration-200;
+    background-color: rgb(var(--rpg-danger) / 0.1);
+    border: 1px solid rgb(var(--rpg-danger) / 0.3);
   }
+
+  .btn-danger:hover {
+    background-color: rgb(var(--rpg-danger) / 0.2);
+  }
+
   .btn-success {
-    @apply bg-success hover:bg-success/90 text-white font-semibold px-6 py-3 rounded-xl
-           transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-success/25;
+    @apply bg-success text-bg font-bold px-6 py-3 rounded-xl transition-all duration-200 hover:scale-105 hover:shadow-lg;
+  }
+
+  .btn-success:hover {
+    background-color: rgb(var(--rpg-success) / 0.85);
   }
 
   /* Input */
   .input {
-    @apply w-full bg-surface border border-border rounded-xl px-4 py-3 text-text
-           placeholder-muted focus:outline-none focus:border-primary focus:ring-2
-           focus:ring-primary/20 transition-all duration-200;
+    @apply w-full bg-surface border border-border rounded-xl px-4 py-3 text-text placeholder-muted focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200;
+    font-family: 'Nunito', sans-serif;
   }
 
   /* Badge */
   .badge {
-    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold;
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold;
   }
-  .badge-facil    { @apply bg-success/20 text-success border border-success/30; }
-  .badge-medio    { @apply bg-accent/20 text-accent border border-accent/30; }
-  .badge-dificil  { @apply bg-warning/20 text-warning border border-warning/30; }
-  .badge-experto  { @apply bg-danger/20 text-danger border border-danger/30; }
-  .badge-leyenda  { @apply bg-secondary/20 text-secondary border border-secondary/30; }
 
-  /* XP color */
-  .xp-text { @apply text-accent font-bold; }
+  .badge-facil {
+    @apply text-success;
+    background-color: rgb(var(--rpg-success)/0.15);
+    border: 1px solid rgb(var(--rpg-success)/0.3);
+  }
+
+  .badge-medio {
+    @apply text-primary;
+    background-color: rgb(var(--rpg-primary)/0.15);
+    border: 1px solid rgb(var(--rpg-primary)/0.3);
+  }
+
+  .badge-dificil {
+    @apply text-warning;
+    background-color: rgb(var(--rpg-warning)/0.15);
+    border: 1px solid rgb(var(--rpg-warning)/0.3);
+  }
+
+  .badge-experto {
+    @apply text-danger;
+    background-color: rgb(var(--rpg-danger)/0.15);
+    border: 1px solid rgb(var(--rpg-danger)/0.3);
+  }
+
+  .badge-leyenda {
+    @apply text-secondary;
+    background-color: rgb(var(--rpg-secondary)/0.15);
+    border: 1px solid rgb(var(--rpg-secondary)/0.3);
+  }
+
+  /* XP text */
+  .xp-text {
+    @apply text-accent font-extrabold;
+  }
 
   /* Code block */
   .code-block {
-    @apply bg-bg/80 border border-border rounded-xl p-4 font-mono text-sm
-           text-green-400 whitespace-pre-wrap overflow-x-auto;
+    @apply border border-border rounded-xl p-4 font-mono text-sm text-success whitespace-pre-wrap overflow-x-auto;
+    background-color: rgb(var(--rpg-bg) / 0.8);
   }
 
   /* Stat card */
   .stat-card {
     @apply glass-card p-5 flex flex-col gap-1;
+    transition: border-color 0.2s, transform 0.2s;
   }
 
-  /* Glow effect on hover */
+  .stat-card:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Glow hover */
   .glow-hover {
-    @apply transition-shadow duration-300 hover:shadow-lg hover:shadow-primary/30;
+    @apply transition-shadow duration-300;
+  }
+
+  .glow-hover:hover {
+    box-shadow: 0 0 16px rgba(88, 166, 255, 0.3);
+  }
+
+  /* RPG pixel heading */
+  .rpg-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #58A6FF, #BC8CFF, #F78166);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* RPG border frame (double border effect) */
+  .rpg-frame {
+    border: 2px solid rgb(var(--rpg-border));
+    box-shadow: 0 0 0 1px rgba(88, 166, 255, 0.08) inset, 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Stone Button styling */
+  .btn-stone {
+    @apply flex items-center justify-center gap-2 px-4 py-2 font-black transition-all duration-200 active:scale-95 shadow-lg;
+    background-image: url('/stonebutton.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    border: 2px solid #2d3748;
+    /* Dark grey border for stone feel */
+    border-radius: 0.5rem;
+    /* rounded-lg */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  }
+
+  .btn-stone:hover {
+    filter: brightness(1.15);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
   }
 }
 
-/* Particles / stars background */
+/* ── Particles / stars ─────────────────────────────────────────── */
 .stars-bg {
   background-image:
-    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 100%),
-    radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.1) 0%, transparent 100%),
-    radial-gradient(1px 1px at 50% 80%, rgba(255,255,255,0.12) 0%, transparent 100%),
-    radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,0.08) 0%, transparent 100%),
-    radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.1) 0%, transparent 100%);
+    radial-gradient(1px 1px at 20% 30%, rgba(88, 166, 255, 0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 10%, rgba(188, 140, 255, 0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 80%, rgba(63, 185, 80, 0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 10% 60%, rgba(88, 166, 255, 0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 70%, rgba(247, 129, 102, 0.2) 0%, transparent 100%);
 }
 
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6, #f59e0b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* ── Answer feedback ───────────────────────────────────────────── */
+.answer-correct {
+  animation: correctPulse 0.5s ease-out;
 }
 
-/* Answer feedback */
-.answer-correct { animation: correctPulse 0.5s ease-out; }
-.answer-wrong   { animation: shake 0.4s ease-in-out; }
+.answer-wrong {
+  animation: shake 0.4s ease-in-out;
+}
 
 @keyframes correctPulse {
-  0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-  70%  { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(63, 185, 80, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 15px rgba(63, 185, 80, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(63, 185, 80, 0);
+  }
 }
 
 @keyframes shake {
-  0%,100% { transform: translateX(0); }
-  20%      { transform: translateX(-8px); }
-  40%      { transform: translateX(8px); }
-  60%      { transform: translateX(-4px); }
-  80%      { transform: translateX(4px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-8px);
+  }
+
+  40% {
+    transform: translateX(8px);
+  }
+
+  60% {
+    transform: translateX(-4px);
+  }
+
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+/* ── RPG sidebar nav active item glow ─────────────────────────── */
+.rpg-nav-active {
+  position: relative;
+}
+
+.rpg-nav-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: rgb(var(--rpg-primary));
+  border-radius: 0 2px 2px 0;
+}
+
+@keyframes rpg-pulse {
+  0% {
+    box-shadow: 0 0 0 0px rgba(88, 166, 255, 0.4), 0 0 10px rgba(88, 166, 255, 0.1);
+  }
+
+  50% {
+    box-shadow: 0 0 0 4px rgba(88, 166, 255, 0), 0 0 25px rgba(88, 166, 255, 0.3);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0px rgba(88, 166, 255, 0), 0 0 10px rgba(88, 166, 255, 0.1);
+  }
+}
+
+.animate-rpg-pulse {
+  animation: rpg-pulse 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
 }

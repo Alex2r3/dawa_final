@@ -130,7 +130,8 @@ INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, ex
 
 -- Mundo 1 - Nivel 5 (Jefe Fundamentos)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0001-0000-0000-000000000005','sort','Ordena las líneas para imprimir "Hola" y luego "Mundo":',NULL,'System.out.println("Hola");\nSystem.out.println("Mundo");','El orden de ejecución es de arriba hacia abajo.','{"lineas":["System.out.println(\"Mundo\");","System.out.println(\"Hola\");"]}',1),
+('bbbbbbbb-0001-0000-0000-000000000005','sort','Ordena las líneas para imprimir "Hola" y luego "Mundo":',NULL,'System.out.println("Hola");
+System.out.println("Mundo");','El orden de ejecución es de arriba hacia abajo.','{"lineas":["System.out.println(\"Mundo\");","System.out.println(\"Hola\");"]}',1),
 ('bbbbbbbb-0001-0000-0000-000000000005','fix','Encuentra y corrige el error:','System.out.println("Hola Mundo")','Falta el ; al final','Toda sentencia en Java debe terminar con punto y coma.','{}',2);
 
 -- Mundo 2 - Nivel 1 (Declarar variables)
@@ -150,17 +151,25 @@ INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, ex
 
 -- Mundo 2 - Nivel 4 (Conversión de tipos)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0002-0000-0000-000000000004','predict','¿Qué imprime este código?','int x = 9;\ndouble y = (double) x;\nSystem.out.println(y);','9.0','Al convertir int a double, se agrega el decimal .0','{}',1),
-('bbbbbbbb-0002-0000-0000-000000000004','complete','Convierte el int a String:','int n = 42;\nString s = String.___(n);','valueOf','String.valueOf() convierte un int a String.','{}',2);
+('bbbbbbbb-0002-0000-0000-000000000004','predict','¿Qué imprime este código?','int x = 9;
+double y = (double) x;
+System.out.println(y);','9.0','Al convertir int a double, se agrega el decimal .0','{}',1),
+('bbbbbbbb-0002-0000-0000-000000000004','complete','Convierte el int a String:','int n = 42;
+String s = String.___(n);','valueOf','String.valueOf() convierte un int a String.','{}',2);
 
 -- Mundo 2 - Nivel 5 (Jefe Variables)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0002-0000-0000-000000000005','sort','Ordena el código para sumar dos números e imprimir el resultado:',NULL,'int a = 5;\nint b = 3;\nint suma = a + b;\nSystem.out.println(suma);','Primero declaramos las variables, luego calculamos y mostramos.','{"lineas":["int suma = a + b;","System.out.println(suma);","int b = 3;","int a = 5;"]}',1),
+('bbbbbbbb-0002-0000-0000-000000000005','sort','Ordena el código para sumar dos números e imprimir el resultado:',NULL,'int a = 5;
+int b = 3;
+int suma = a + b;
+System.out.println(suma);','Primero declaramos las variables, luego calculamos y mostramos.','{"lineas":["int suma = a + b;","System.out.println(suma);","int b = 3;","int a = 5;"]}',1),
 ('bbbbbbbb-0002-0000-0000-000000000005','fix','Corrige el error en la declaración:','String nombre = Hola;','Falta las comillas alrededor de Hola','Los String literales deben estar entre comillas dobles.','{}',2);
 
 -- Mundo 3 - Nivel 1 (Operadores aritméticos)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0003-0000-0000-000000000001','predict','¿Qué imprime este código?','int a = 10;\nint b = 3;\nSystem.out.println(a % b);','1','El operador % devuelve el resto de la división. 10 % 3 = 1','{}',1),
+('bbbbbbbb-0003-0000-0000-000000000001','predict','¿Qué imprime este código?','int a = 10;
+int b = 3;
+System.out.println(a % b);','1','El operador % devuelve el resto de la división. 10 % 3 = 1','{}',1),
 ('bbbbbbbb-0003-0000-0000-000000000001','multiple','¿Qué operador se usa para potencia en Java?',NULL,'Math.pow()','Java no tiene operador ** para potencias. Se usa Math.pow().','{"opciones":["**","^","Math.pow()","^^"]}',2);
 
 -- Mundo 3 - Nivel 2 (Operadores relacionales)
@@ -180,42 +189,79 @@ INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, ex
 
 -- Mundo 3 - Nivel 5 (Jefe Operadores)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0003-0000-0000-000000000005','predict','¿Cuál es el resultado?','int x = 5;\nx += 3;\nSystem.out.println(x);','8','x += 3 es equivalente a x = x + 3. 5 + 3 = 8','{}',1),
+('bbbbbbbb-0003-0000-0000-000000000005','predict','¿Cuál es el resultado?','int x = 5;
+x += 3;
+System.out.println(x);','8','x += 3 es equivalente a x = x + 3. 5 + 3 = 8','{}',1),
 ('bbbbbbbb-0003-0000-0000-000000000005','multiple','¿Qué hace el operador ++ en Java?',NULL,'Incrementa el valor en 1','El operador ++ es el operador de incremento, suma 1 al valor actual.','{"opciones":["Multiplica por 2","Incrementa el valor en 1","Concatena strings","Potencia de 2"]}',2);
 
 -- Mundo 4 - Nivel 1 (if básico)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0004-0000-0000-000000000001','predict','¿Qué imprime este código?','int edad = 20;\nif (edad >= 18) {\n  System.out.println("Mayor");\n}','Mayor','20 >= 18 es true, así que se ejecuta el bloque if.','{}',1),
+('bbbbbbbb-0004-0000-0000-000000000001','predict','¿Qué imprime este código?','int edad = 20;
+if (edad >= 18) {
+  System.out.println("Mayor");
+}','Mayor','20 >= 18 es true, así que se ejecuta el bloque if.','{}',1),
 ('bbbbbbbb-0004-0000-0000-000000000001','truefalse','El bloque if se ejecuta cuando la condición es false.',NULL,'false','El bloque if solo se ejecuta cuando la condición es true.','{}',2);
 
 -- Mundo 4 - Nivel 2 (if-else)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0004-0000-0000-000000000002','predict','¿Qué imprime?','int nota = 45;\nif (nota >= 60) {\n  System.out.println("Aprobado");\n} else {\n  System.out.println("Reprobado");\n}','Reprobado','45 < 60, por lo que se ejecuta el bloque else.','{}',1),
-('bbbbbbbb-0004-0000-0000-000000000002','complete','Completa el código:','if (x > 0) {\n  System.out.println("Positivo");\n} ___ {\n  System.out.println("No positivo");\n}','else','La palabra clave else define qué hacer cuando la condición es false.','{}',2);
+('bbbbbbbb-0004-0000-0000-000000000002','predict','¿Qué imprime?','int nota = 45;
+if (nota >= 60) {
+  System.out.println("Aprobado");
+} else {
+  System.out.println("Reprobado");
+}','Reprobado','45 < 60, por lo que se ejecuta el bloque else.','{}',1),
+('bbbbbbbb-0004-0000-0000-000000000002','complete','Completa el código:','if (x > 0) {
+  System.out.println("Positivo");
+} ___ {
+  System.out.println("No positivo");
+}','else','La palabra clave else define qué hacer cuando la condición es false.','{}',2);
 
 -- Mundo 4 - Nivel 3 (else-if)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0004-0000-0000-000000000003','predict','¿Qué imprime?','int n = 0;\nif (n > 0) System.out.println("Positivo");\nelse if (n < 0) System.out.println("Negativo");\nelse System.out.println("Cero");','Cero','n=0 no es >0 ni <0, por lo que cae en el else final.','{}',1),
+('bbbbbbbb-0004-0000-0000-000000000003','predict','¿Qué imprime?','int n = 0;
+if (n > 0) System.out.println("Positivo");
+else if (n < 0) System.out.println("Negativo");
+else System.out.println("Cero");','Cero','n=0 no es >0 ni <0, por lo que cae en el else final.','{}',1),
 ('bbbbbbbb-0004-0000-0000-000000000003','multiple','¿Cuántas condiciones else-if puedes tener en una cadena?',NULL,'Ilimitadas','Puedes encadenar tantos else-if como necesites.','{"opciones":["Solo 1","Solo 2","Solo 3","Ilimitadas"]}',2);
 
 -- Mundo 4 - Nivel 4 (switch-case)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0004-0000-0000-000000000004','predict','¿Qué imprime?','int dia = 2;\nswitch(dia) {\n  case 1: System.out.println("Lunes"); break;\n  case 2: System.out.println("Martes"); break;\n  default: System.out.println("Otro");\n}','Martes','dia=2 coincide con case 2, imprime "Martes" y el break detiene la ejecución.','{}',1),
+('bbbbbbbb-0004-0000-0000-000000000004','predict','¿Qué imprime?','int dia = 2;
+switch(dia) {
+  case 1: System.out.println("Lunes"); break;
+  case 2: System.out.println("Martes"); break;
+  default: System.out.println("Otro");
+}','Martes','dia=2 coincide con case 2, imprime "Martes" y el break detiene la ejecución.','{}',1),
 ('bbbbbbbb-0004-0000-0000-000000000004','truefalse','La sentencia break en un switch evita que se ejecuten los siguientes casos.',NULL,'true','Sin break, la ejecución continúa al siguiente case (fall-through).','{}',2);
 
 -- Mundo 4 - Nivel 5 (Jefe Condicionales)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0004-0000-0000-000000000005','sort','Ordena el código para verificar si un número es positivo, negativo o cero:',NULL,'int n = -5;\nif (n > 0) {\n  System.out.println("Positivo");\n} else if (n < 0) {\n  System.out.println("Negativo");\n} else {\n  System.out.println("Cero");\n}','El orden de las condiciones importa.','{"lineas":["} else {","int n = -5;","} else if (n < 0) {","if (n > 0) {","  System.out.println(\"Cero\");","  System.out.println(\"Positivo\");","  System.out.println(\"Negativo\");","}"]}',1),
+('bbbbbbbb-0004-0000-0000-000000000005','sort','Ordena el código para verificar si un número es positivo, negativo o cero:',NULL,'int n = -5;
+if (n > 0) {
+  System.out.println("Positivo");
+} else if (n < 0) {
+  System.out.println("Negativo");
+} else {
+  System.out.println("Cero");
+}','El orden de las condiciones importa.','{"lineas":["} else {","int n = -5;","} else if (n < 0) {","if (n > 0) {","  System.out.println(\"Cero\");","  System.out.println(\"Positivo\");","  System.out.println(\"Negativo\");","}"]}',1),
 ('bbbbbbbb-0004-0000-0000-000000000005','multiple','El operador ternario a ? b : c equivale a:',NULL,'if(a) b else c','El operador ternario es una forma compacta de if-else.','{"opciones":["a && b || c","if(a) b else c","switch(a) {case b: c}","a * b - c"]}',2);
 
 -- Mundo 5 - Nivel 1 (for)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0005-0000-0000-000000000001','predict','¿Cuántas veces imprime "Hola"?','for(int i = 0; i < 3; i++) {\n  System.out.println("Hola");\n}','3','El bucle va de i=0 a i=2 (mientras i<3), entonces itera 3 veces.','{}',1),
+('bbbbbbbb-0005-0000-0000-000000000001','predict','¿Cuántas veces imprime "Hola"?','for(int i = 0; i < 3; i++) {
+  System.out.println("Hola");
+}','3','El bucle va de i=0 a i=2 (mientras i<3), entonces itera 3 veces.','{}',1),
 ('bbbbbbbb-0005-0000-0000-000000000001','complete','Completa el for para contar del 1 al 5:','for(int i = 1; i ___ 5; i++) {','<=','i <= 5 incluye el 5 en el rango.','{}',2);
 
 -- Mundo 5 - Nivel 2 (while)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0005-0000-0000-000000000002','predict','¿Qué imprime este código?','int i = 0;\nwhile(i < 3) {\n  System.out.println(i);\n  i++;\n}','0\n1\n2','Imprime i=0, 1, 2. Cuando i=3, la condición es falsa y para.','{}',1),
+('bbbbbbbb-0005-0000-0000-000000000002','predict','¿Qué imprime este código?','int i = 0;
+while(i < 3) {
+  System.out.println(i);
+  i++;
+}','0
+1
+2','Imprime i=0, 1, 2. Cuando i=3, la condición es falsa y para.','{}',1),
 ('bbbbbbbb-0005-0000-0000-000000000002','truefalse','Un bucle while puede no ejecutarse nunca si la condición inicial es false.',NULL,'true','Si la condición inicial es false, el while no ejecuta su cuerpo.','{}',2);
 
 -- Mundo 5 - Nivel 3 (do-while)
@@ -225,13 +271,30 @@ INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, ex
 
 -- Mundo 5 - Nivel 4 (break y continue)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0005-0000-0000-000000000004','predict','¿Qué imprime?','for(int i=0;i<5;i++){\n  if(i==3) break;\n  System.out.println(i);\n}','0\n1\n2','Cuando i=3, el break detiene el bucle. Solo imprime 0, 1, 2.','{}',1),
-('bbbbbbbb-0005-0000-0000-000000000004','predict','¿Qué imprime?','for(int i=0;i<5;i++){\n  if(i==3) continue;\n  System.out.println(i);\n}','0\n1\n2\n4','continue salta el resto del ciclo actual. Se salta el 3.','{}',2);
+('bbbbbbbb-0005-0000-0000-000000000004','predict','¿Qué imprime?','for(int i=0;i<5;i++){
+  if(i==3) break;
+  System.out.println(i);
+}','0
+1
+2','Cuando i=3, el break detiene el bucle. Solo imprime 0, 1, 2.','{}',1),
+('bbbbbbbb-0005-0000-0000-000000000004','predict','¿Qué imprime?','for(int i=0;i<5;i++){
+  if(i==3) continue;
+  System.out.println(i);
+}','0
+1
+2
+4','continue salta el resto del ciclo actual. Se salta el 3.','{}',2);
 
 -- Mundo 5 - Nivel 5 (Jefe Bucles)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0005-0000-0000-000000000005','predict','¿Cuánto vale suma?','int suma = 0;\nfor(int i=1;i<=10;i++) suma += i;\nSystem.out.println(suma);','55','La suma de 1 a 10 es 55. (n*(n+1)/2 = 10*11/2 = 55)','{}',1),
-('bbbbbbbb-0005-0000-0000-000000000005','sort','Ordena el código para imprimir los números pares del 1 al 10:',NULL,'for(int i=1;i<=10;i++) {\n  if(i%2==0) {\n    System.out.println(i);\n  }\n}','El módulo 2 identifica los números pares.','{"lineas":["for(int i=1;i<=10;i++) {","    System.out.println(i);","  if(i%2==0) {","  }","}"]}',2);
+('bbbbbbbb-0005-0000-0000-000000000005','predict','¿Cuánto vale suma?','int suma = 0;
+for(int i=1;i<=10;i++) suma += i;
+System.out.println(suma);','55','La suma de 1 a 10 es 55. (n*(n+1)/2 = 10*11/2 = 55)','{}',1),
+('bbbbbbbb-0005-0000-0000-000000000005','sort','Ordena el código para imprimir los números pares del 1 al 10:',NULL,'for(int i=1;i<=10;i++) {
+  if(i%2==0) {
+    System.out.println(i);
+  }
+}','El módulo 2 identifica los números pares.','{"lineas":["for(int i=1;i<=10;i++) {","    System.out.println(i);","  if(i%2==0) {","  }","}"]}',2);
 
 -- Mundo 6 - Nivel 1 (Métodos)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
@@ -240,12 +303,17 @@ INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, ex
 
 -- Mundo 6 - Nivel 2 (Parámetros)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0006-0000-0000-000000000002','predict','¿Qué imprime?','static void saludar(String nombre) {\n  System.out.println("Hola " + nombre);\n}\n// saludar("Ana");','Hola Ana','El método recibe "Ana" y lo concatena con "Hola ".','{}',1),
-('bbbbbbbb-0006-0000-0000-000000000002','complete','Completa la llamada al método:','static int sumar(int a, int b) { return a+b; }\nint r = ___(5, 3);','sumar','Se llama al método con su nombre y los argumentos.','{}',2);
+('bbbbbbbb-0006-0000-0000-000000000002','predict','¿Qué imprime?','static void saludar(String nombre) {
+  System.out.println("Hola " + nombre);
+}
+// saludar("Ana");','Hola Ana','El método recibe "Ana" y lo concatena con "Hola ".','{}',1),
+('bbbbbbbb-0006-0000-0000-000000000002','complete','Completa la llamada al método:','static int sumar(int a, int b) { return a+b; }
+int r = ___(5, 3);','sumar','Se llama al método con su nombre y los argumentos.','{}',2);
 
 -- Mundo 6 - Nivel 3 (Return)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0006-0000-0000-000000000003','predict','¿Qué imprime?','static int doble(int n) { return n * 2; }\nSystem.out.println(doble(7));','14','doble(7) devuelve 7*2=14.','{}',1),
+('bbbbbbbb-0006-0000-0000-000000000003','predict','¿Qué imprime?','static int doble(int n) { return n * 2; }
+System.out.println(doble(7));','14','doble(7) devuelve 7*2=14.','{}',1),
 ('bbbbbbbb-0006-0000-0000-000000000003','truefalse','Una función puede tener múltiples sentencias return.',NULL,'true','Se puede tener varios return, pero solo uno se ejecuta por llamada.','{}',2);
 
 -- Mundo 6 - Nivel 4 (Sobrecarga)
@@ -255,8 +323,16 @@ INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, ex
 
 -- Mundo 6 - Nivel 5 (Jefe Métodos)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0006-0000-0000-000000000005','predict','¿Qué imprime?','static int factorial(int n) {\n  if(n==0) return 1;\n  return n * factorial(n-1);\n}\nSystem.out.println(factorial(4));','24','factorial(4)=4*3*2*1=24. Es un ejemplo de recursión.','{}',1),
-('bbbbbbbb-0006-0000-0000-000000000005','sort','Ordena el método que suma un arreglo:',NULL,'static int sumaArreglo(int[] arr) {\n  int total = 0;\n  for(int n : arr) total += n;\n  return total;\n}','Primero inicializamos, luego iteramos y acumulamos.','{"lineas":["  return total;","static int sumaArreglo(int[] arr) {","  for(int n : arr) total += n;","  int total = 0;","}"]}',2);
+('bbbbbbbb-0006-0000-0000-000000000005','predict','¿Qué imprime?','static int factorial(int n) {
+  if(n==0) return 1;
+  return n * factorial(n-1);
+}
+System.out.println(factorial(4));','24','factorial(4)=4*3*2*1=24. Es un ejemplo de recursión.','{}',1),
+('bbbbbbbb-0006-0000-0000-000000000005','sort','Ordena el método que suma un arreglo:',NULL,'static int sumaArreglo(int[] arr) {
+  int total = 0;
+  for(int n : arr) total += n;
+  return total;
+}','Primero inicializamos, luego iteramos y acumulamos.','{"lineas":["  return total;","static int sumaArreglo(int[] arr) {","  for(int n : arr) total += n;","  int total = 0;","}"]}',2);
 
 -- Mundo 7 - Nivel 1 (Arreglos)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
@@ -265,13 +341,16 @@ INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, ex
 
 -- Mundo 7 - Nivel 2 (Acceso)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0007-0000-0000-000000000002','predict','¿Qué imprime?','int[] nums = {5, 10, 15};\nSystem.out.println(nums[1]);','10','nums[1] accede al segundo elemento (índice 1) que es 10.','{}',1),
+('bbbbbbbb-0007-0000-0000-000000000002','predict','¿Qué imprime?','int[] nums = {5, 10, 15};
+System.out.println(nums[1]);','10','nums[1] accede al segundo elemento (índice 1) que es 10.','{}',1),
 ('bbbbbbbb-0007-0000-0000-000000000002','truefalse','En Java, acceder a un índice fuera del rango del arreglo lanza una excepción.',NULL,'true','Se lanza ArrayIndexOutOfBoundsException.','{}',2);
 
 -- Mundo 7 - Nivel 3 (Recorrer)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0007-0000-0000-000000000003','predict','¿Qué imprime?','int[] nums = {1,2,3};\nfor(int n : nums) System.out.print(n+" ");','1 2 3 ','El for-each recorre todos los elementos del arreglo.','{}',1),
-('bbbbbbbb-0007-0000-0000-000000000003','complete','Obtén la longitud del arreglo:','int[] arr = {1,2,3,4,5};\nint len = arr.___;','length','La propiedad length devuelve el tamaño del arreglo.','{}',2);
+('bbbbbbbb-0007-0000-0000-000000000003','predict','¿Qué imprime?','int[] nums = {1,2,3};
+for(int n : nums) System.out.print(n+" ");','1 2 3 ','El for-each recorre todos los elementos del arreglo.','{}',1),
+('bbbbbbbb-0007-0000-0000-000000000003','complete','Obtén la longitud del arreglo:','int[] arr = {1,2,3,4,5};
+int len = arr.___;','length','La propiedad length devuelve el tamaño del arreglo.','{}',2);
 
 -- Mundo 7 - Nivel 4 (ArrayList)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
@@ -280,8 +359,14 @@ INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, ex
 
 -- Mundo 7 - Nivel 5 (Jefe Arreglos)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0007-0000-0000-000000000005','predict','¿Qué imprime?','int[] nums = {3,1,4,1,5};\nint max = nums[0];\nfor(int n : nums) if(n>max) max=n;\nSystem.out.println(max);','5','El algoritmo encuentra el máximo recorriendo el arreglo. El mayor es 5.','{}',1),
-('bbbbbbbb-0007-0000-0000-000000000005','sort','Ordena el código para invertir un arreglo de 3 elementos:',NULL,'int[] arr = {1,2,3};\nint temp = arr[0];\narr[0] = arr[2];\narr[2] = temp;','Para invertir se necesita una variable temporal.','{"lineas":["arr[2] = temp;","int temp = arr[0];","int[] arr = {1,2,3};","arr[0] = arr[2];"]}',2);
+('bbbbbbbb-0007-0000-0000-000000000005','predict','¿Qué imprime?','int[] nums = {3,1,4,1,5};
+int max = nums[0];
+for(int n : nums) if(n>max) max=n;
+System.out.println(max);','5','El algoritmo encuentra el máximo recorriendo el arreglo. El mayor es 5.','{}',1),
+('bbbbbbbb-0007-0000-0000-000000000005','sort','Ordena el código para invertir un arreglo de 3 elementos:',NULL,'int[] arr = {1,2,3};
+int temp = arr[0];
+arr[0] = arr[2];
+arr[2] = temp;','Para invertir se necesita una variable temporal.','{"lineas":["arr[2] = temp;","int temp = arr[0];","int[] arr = {1,2,3};","arr[0] = arr[2];"]}',2);
 
 -- Mundo 8 - Nivel 1 (Clases)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
@@ -290,13 +375,20 @@ INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, ex
 
 -- Mundo 8 - Nivel 2 (Atributos)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0008-0000-0000-000000000002','predict','¿Qué imprime?','class Perro {\n  String nombre = "Rex";\n}\nPerro p = new Perro();\nSystem.out.println(p.nombre);','Rex','Se accede al atributo nombre del objeto p.','{}',1),
+('bbbbbbbb-0008-0000-0000-000000000002','predict','¿Qué imprime?','class Perro {
+  String nombre = "Rex";
+}
+Perro p = new Perro();
+System.out.println(p.nombre);','Rex','Se accede al atributo nombre del objeto p.','{}',1),
 ('bbbbbbbb-0008-0000-0000-000000000002','multiple','¿Qué modificador de acceso hace un atributo accesible solo dentro de la clase?',NULL,'private','private restringe el acceso solo a la propia clase.','{"opciones":["public","protected","private","default"]}',2);
 
 -- Mundo 8 - Nivel 3 (Constructores)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
 ('bbbbbbbb-0008-0000-0000-000000000003','truefalse','El constructor de una clase tiene el mismo nombre que la clase.',NULL,'true','El constructor siempre lleva el mismo nombre que su clase.','{}',1),
-('bbbbbbbb-0008-0000-0000-000000000003','complete','Completa el constructor:','class Auto {\n  String marca;\n  ___ Auto(String m) { this.marca = m; }\n}','public','Los constructores generalmente son public para poder crear objetos desde fuera.','{}',2);
+('bbbbbbbb-0008-0000-0000-000000000003','complete','Completa el constructor:','class Auto {
+  String marca;
+  ___ Auto(String m) { this.marca = m; }
+}','public','Los constructores generalmente son public para poder crear objetos desde fuera.','{}',2);
 
 -- Mundo 8 - Nivel 4 (Herencia)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
@@ -340,7 +432,7 @@ INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, ex
 
 -- Mundo 10 - Nivel 2 (Búsqueda Lineal)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
-('bbbbbbbb-0010-0000-0000-000000000002','multiple','¿Cuál es la complejidad de la búsqueda lineal?',NULL,'O(n)','La búsqueda lineal revisa cada elemento, en el peor caso revisa todos: O(n).','{"opciones":["O(1)","O(log n)","O(n)","O(n²)"]}',1),
+('bbbbbbbb-0010-0000-0000-000000000002','multiple','¿Qué estructura de datos es ideal para implementar una búsqueda en anchura (BFS)?',NULL,'Cola (Queue)','BFS explora por niveles, por lo que utiliza una estructura FIFO (First-In, First-Out).','{"opciones":["Pila (Stack)","Cola (Queue)","Árbol Binario","Grafo Dirigido"]}',1),
 ('bbbbbbbb-0010-0000-0000-000000000002','truefalse','La búsqueda lineal requiere que el arreglo esté ordenado.',NULL,'false','La búsqueda lineal funciona con arreglos desordenados.','{}',2);
 
 -- Mundo 10 - Nivel 3 (Búsqueda Binaria)
@@ -356,7 +448,14 @@ INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, ex
 -- Mundo 10 - Nivel 5 (Jefe Legendario)
 INSERT INTO challenges (level_id, tipo, pregunta, codigo, respuesta_correcta, explicacion, metadata_json, orden) VALUES
 ('bbbbbbbb-0010-0000-0000-000000000005','multiple','¿Qué algoritmo de ordenamiento tiene la mejor complejidad promedio?',NULL,'Quick Sort (O(n log n))','Quick Sort tiene O(n log n) en promedio, siendo muy eficiente.','{"opciones":["Bubble Sort O(n²)","Selection Sort O(n²)","Quick Sort (O(n log n))","Insertion Sort O(n²)"]}',1),
-('bbbbbbbb-0010-0000-0000-000000000005','sort','Ordena los pasos del algoritmo de búsqueda binaria:',NULL,'int izq = 0;\nint der = arr.length - 1;\nwhile(izq <= der) {\n  int mid = (izq + der) / 2;\n  if(arr[mid] == target) return mid;\n  if(arr[mid] < target) izq = mid + 1;\n  else der = mid - 1;\n}','La búsqueda binaria divide el espacio a la mitad en cada paso.','{"lineas":["  if(arr[mid] < target) izq = mid + 1;","int izq = 0;","  int mid = (izq + der) / 2;","int der = arr.length - 1;","  if(arr[mid] == target) return mid;","while(izq <= der) {","  else der = mid - 1;","}"]}',2);
+('bbbbbbbb-0010-0000-0000-000000000005','sort','Ordena los pasos del algoritmo de búsqueda binaria:',NULL,'int izq = 0;
+int der = arr.length - 1;
+while(izq <= der) {
+  int mid = (izq + der) / 2;
+  if(arr[mid] == target) return mid;
+  if(arr[mid] < target) izq = mid + 1;
+  else der = mid - 1;
+}','La búsqueda binaria divide el espacio a la mitad en cada paso.','{"lineas":["  if(arr[mid] < target) izq = mid + 1;","int izq = 0;","  int mid = (izq + der) / 2;","int der = arr.length - 1;","  if(arr[mid] == target) return mid;","while(izq <= der) {","  else der = mid - 1;","}"]}',2);
 
 -- ============================================================
 -- ACHIEVEMENTS (20)
