@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../context/AuthContext'
 import { gsap } from 'gsap'
 import api from '../services/api'
@@ -24,6 +24,7 @@ export default function Challenge() {
   const { levelId } = useParams()
   const navigate    = useNavigate()
   const { refreshUser } = useAuth()
+  const queryClient = useQueryClient()
   const pageRef     = useGsapEntrance('.gsap-item')
 
   // Page states: 'intro' | 'playing' | 'feedback' | 'summary'
@@ -133,9 +134,12 @@ export default function Challenge() {
       setTimerRunning(true)
       startTimeRef.current = Date.now()
     } else {
-      // Finished all challenges
+      // Finished all challenges — invalidate levels query so progress count refreshes
       setStatus('summary')
-      refreshUser() // Update header XP and coins immediately
+      refreshUser()
+      if (level?.world_id) {
+        queryClient.invalidateQueries({ queryKey: ['levels', level.world_id] })
+      }
     }
   }
 

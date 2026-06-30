@@ -47,6 +47,7 @@
 
   html {
     scroll-behavior: smooth;
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -333,4 +334,10 @@
 
 .animate-rpg-pulse {
   animation: rpg-pulse 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes rpg-dash-flow {
+  to {
+    stroke-dashoffset: -12;
+  }
 }

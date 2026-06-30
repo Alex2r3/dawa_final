@@ -5,6 +5,14 @@ import { AuthProvider } from './context/AuthContext'
 import App from './App'
 import './index.css'
 
+// Initialize ambient music singleton globally
+if (typeof window !== 'undefined' && !window.ambientAudio) {
+  const audio = new Audio('/ambient.mp3')
+  audio.loop = true
+  audio.volume = 0.25
+  window.ambientAudio = audio
+}
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

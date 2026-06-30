@@ -104,12 +104,41 @@ exports.answerChallenge = async (req, res, next) => {
 
       // Update user_progress for the level
       const levelId = challenge.level_id;
+
+      // Count total challenges in this level
+      const { count: totalChallenges } = await supabase
+        .from('challenges')
+        .select('*', { count: 'exact', head: true })
+        .eq('level_id', levelId);
+
+      // Count how many distinct challenges the user has answered correctly
+      const { data: correctAttempts } = await supabase
+        .from('attempts')
+        .select('challenge_id')
+        .eq('user_id', userId)
+        .eq('is_correct', true);
+
+      // Filter only challenge_ids that belong to this level
+      const { data: levelChallengeIds } = await supabase
+        .from('challenges')
+        .select('id')
+        .eq('level_id', levelId);
+
+      const levelChallengeSet = new Set((levelChallengeIds || []).map(c => c.id));
+      const correctInLevel = new Set(
+        (correctAttempts || [])
+          .map(a => a.challenge_id)
+          .filter(cid => levelChallengeSet.has(cid))
+      );
+
+      const isLevelNowComplete = correctInLevel.size >= (totalChallenges || 1);
+
       const { data: prog } = await supabase
         .from('user_progress')
         .select('*')
         .eq('user_id', userId)
         .eq('level_id', levelId)
-        .single();
+        .maybeSingle();
 
       if (prog) {
         const newCount = prog.attempts_count + 1;
@@ -117,25 +146,25 @@ exports.answerChallenge = async (req, res, next) => {
         const newTime  = (!prog.best_time || time_taken < prog.best_time) ? time_taken : prog.best_time;
 
         await supabase.from('user_progress').update({
-          completed:      true,
+          completed:      isLevelNowComplete ? true : prog.completed,
           best_score:     newScore,
           best_time:      newTime,
           attempts_count: newCount,
-          completed_at:   new Date().toISOString(),
+          completed_at:   isLevelNowComplete && !prog.completed ? new Date().toISOString() : prog.completed_at,
         }).eq('id', prog.id);
       } else {
         await supabase.from('user_progress').insert({
           user_id:        userId,
           level_id:       levelId,
-          completed:      true,
+          completed:      isLevelNowComplete,
           best_score:     xp_earned,
           best_time:      time_taken,
           attempts_count: 1,
-          completed_at:   new Date().toISOString(),
+          completed_at:   isLevelNowComplete ? new Date().toISOString() : null,
         });
       }
 
-      level_completed = true;
+      level_completed = isLevelNowComplete;
     }
 
     // Evaluate Achievements

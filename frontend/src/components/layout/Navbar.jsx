@@ -1,10 +1,10 @@
 import { useAuth } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { gsap } from 'gsap'
-import { Moon, Sun, Zap, Menu } from 'lucide-react'
+import { Moon, Sun, Zap, Menu, Volume2, VolumeX } from 'lucide-react'
 import { useRef, useEffect, useState } from 'react'
 
-export default function Navbar({ onMenuClick }) {
+export default function Navbar({ onMenuClick, isMuted, onMuteToggle }) {
   const { user } = useAuth()
   const navRef   = useRef(null)
   
@@ -58,6 +58,14 @@ export default function Navbar({ onMenuClick }) {
       {/* Right: user stats and theme toggle */}
       {user && (
         <div className="ml-auto flex items-center gap-4">
+          <button
+            onClick={onMuteToggle}
+            className="w-9 h-9 rounded-full flex items-center justify-center bg-card border border-border text-muted hover:text-text transition-colors"
+            title={isMuted ? "Activar música" : "Silenciar música"}
+          >
+            {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+          </button>
+
           <button
             onClick={toggleTheme}
             className="w-9 h-9 rounded-full flex items-center justify-center bg-card border border-border text-muted hover:text-text transition-colors"

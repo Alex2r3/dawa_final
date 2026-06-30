@@ -233,7 +233,7 @@ export default function Dashboard() {
 
       {/* ── REALM MAP ── */}
       {!worldsLoading && worldsData?.worlds?.length > 0 && (
-        <div className="gsap-item relative">
+        <div className="gsap-item relative mt-8">
           <div className="flex items-center justify-between mb-4">
             <RpgLabel>── REALM MAP ──</RpgLabel>
             <button
@@ -244,75 +244,140 @@ export default function Dashboard() {
               VER TODO →
             </button>
           </div>
-          <div className="glass-card p-6 overflow-hidden relative rpg-frame bg-surface mt-4" style={{ minHeight: '300px' }}>
+          <div className="glass-card p-6 overflow-hidden relative rpg-frame bg-surface mt-4" style={{ minHeight: '520px' }}>
             {/* Background elements */}
             <div className="absolute inset-0 opacity-30 stars-bg" />
             <div className="absolute inset-0 rpg-scanlines opacity-20 pointer-events-none" />
 
-            {/* SVG Connecting Path */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
-              <defs>
-                <marker id="arrow-normal" viewBox="0 0 10 10" refX="5" refY="5"
-                  markerWidth="5" markerHeight="5"
-                  orient="auto-start-reverse">
-                  <path d="M 0 2 L 8 5 L 0 8 z" fill="rgb(var(--rpg-border))" />
-                </marker>
-                <marker id="arrow-pulse" viewBox="0 0 10 10" refX="5" refY="5"
-                  markerWidth="5" markerHeight="5"
-                  orient="auto-start-reverse">
-                  <path d="M 0 2 L 8 5 L 0 8 z" fill="rgb(var(--rpg-primary))" />
-                </marker>
-              </defs>
-              <path
-                d="M 100,150 Q 250,50 400,150 T 700,150"
-                fill="none"
-                stroke="var(--rpg-border)"
-                strokeWidth="4"
-                strokeDasharray="8 8"
-                markerMid="url(#arrow-normal)"
-                markerEnd="url(#arrow-normal)"
-              />
-              <path
-                d="M 100,150 Q 250,50 400,150"
-                fill="none"
-                stroke="var(--rpg-primary)"
-                strokeWidth="4"
-                strokeDasharray="8 8"
-                markerEnd="url(#arrow-pulse)"
-                className="animate-pulse"
-              />
-            </svg>
+            {/* Duolingo Path Column */}
+            <div className="relative mx-auto w-full max-w-[360px] min-h-[440px] flex flex-col justify-between py-10" style={{ zIndex: 10 }}>
+              
+              {/* SVG Connecting Path */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
+                {/* Background Curvy Path (Grey / Inactive) */}
+                <path
+                  d="M 135,50 C 135,110 180,100 180,160 C 180,220 225,210 225,270 C 225,330 180,320 180,380"
+                  fill="none"
+                  stroke="var(--rpg-border)"
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                />
+                
+                {/* Unlocked Active Path (Glow / Colored) */}
+                <path
+                  d="M 135,50 C 135,110 180,100 180,160 C 180,220 225,210 225,270"
+                  fill="none"
+                  stroke="rgb(var(--rpg-primary))"
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                  strokeDasharray="4 8"
+                  style={{
+                    animation: 'rpg-dash-flow 2s linear infinite'
+                  }}
+                />
+              </svg>
 
-            {/* Nodes */}
-            <div className="relative z-10 w-full h-full flex items-center justify-around mt-8">
+              {/* Nodes Stack */}
               {worldsData.worlds.slice(0, 4).map((world, i) => {
-                const isUnlocked = i <= 2; // Mock logic, ideally based on user progress
+                // Mock progress and unlock state
+                // World 0 (i=0): 100% complete
+                // World 1 (i=1): 60% complete
+                // World 2 (i=2): 15% complete (current active)
+                // World 3 (i=3): Locked
+                const isUnlocked = i <= 2;
+                const isCurrentActive = i === 2;
+                const progress = i === 0 ? 1.0 : i === 1 ? 0.6 : i === 2 ? 0.15 : 0.0;
+                
+                // Alignment offset matching the curves
+                const getLeftStyle = (index) => {
+                  const positions = ['calc(50% - 95px)', 'calc(50% - 40px)', 'calc(50% + 15px)', 'calc(50% - 40px)'];
+                  return positions[index % 4];
+                };
+
+                const radius = 32;
+                const strokeWidth = 5;
+                const circumference = 2 * Math.PI * radius;
+                const strokeDashoffset = circumference * (1 - progress);
+
                 return (
-                  <button
+                  <div
                     key={world.id}
-                    onClick={() => navigate(`/worlds/${world.id}`)}
-                    className="relative group transition-transform duration-300 hover:scale-110 flex flex-col items-center"
+                    className="relative flex justify-center w-full z-10"
                     style={{
-                      transform: `translateY(${i % 2 === 0 ? '-30px' : '30px'})`
+                      height: '80px',
                     }}
                   >
                     <div
-                      className="w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-xl border-4"
+                      className="absolute"
                       style={{
-                        backgroundColor: isUnlocked ? 'var(--rpg-card)' : 'var(--rpg-bg)',
-                        borderColor: isUnlocked ? world.color : 'var(--rpg-border)',
-                        boxShadow: isUnlocked ? `0 0 20px ${world.color}80` : 'none',
-                        filter: !isUnlocked ? 'grayscale(100%) opacity(0.5)' : 'none'
+                        left: getLeftStyle(i),
+                        top: '0px',
                       }}
                     >
-                      {world.icono}
+                      {/* Circle progress wrapper */}
+                      <div className="relative w-20 h-20 flex items-center justify-center">
+                        <svg className="absolute inset-0 w-full h-full -rotate-90">
+                          <circle
+                            cx="40"
+                            cy="40"
+                            r={radius}
+                            className="stroke-border/20 fill-none"
+                            strokeWidth={strokeWidth}
+                          />
+                          {isUnlocked && (
+                            <circle
+                              cx="40"
+                              cy="40"
+                              r={radius}
+                              className="fill-none transition-all duration-500"
+                              style={{
+                                stroke: world.color || 'rgb(var(--rpg-primary))',
+                                strokeWidth: strokeWidth,
+                                strokeDasharray: circumference,
+                                strokeDashoffset: strokeDashoffset,
+                                strokeLinecap: 'round',
+                                filter: isCurrentActive ? `drop-shadow(0 0 6px ${world.color})` : 'none',
+                              }}
+                            />
+                          )}
+                        </svg>
+
+                        {/* Duolingo style 3D Bubble Button */}
+                        <button
+                          onClick={() => navigate(`/worlds/${world.id}`)}
+                          disabled={!isUnlocked}
+                          className="w-14 h-14 rounded-full flex items-center justify-center text-2xl font-black relative transition-all duration-150 active:translate-y-[3px] active:border-b-[3px] hover:brightness-110"
+                          style={{
+                            backgroundColor: isUnlocked ? 'var(--rpg-card)' : 'var(--rpg-bg)',
+                            border: `3px solid ${isUnlocked ? (world.color || 'rgb(var(--rpg-primary))') : 'var(--rpg-border)'}`,
+                            borderBottomWidth: isUnlocked ? '6px' : '3px',
+                            boxShadow: isUnlocked ? `0 4px 0 rgba(0,0,0,0.15)` : 'none',
+                            transform: isCurrentActive ? 'scale(1.08)' : 'none',
+                            cursor: isUnlocked ? 'pointer' : 'not-allowed',
+                            filter: !isUnlocked ? 'grayscale(100%) opacity(0.5)' : 'none',
+                          }}
+                          title={world.nombre}
+                        >
+                          {isCurrentActive && (
+                            <span className="absolute -top-3 px-1.5 py-0.5 bg-accent text-white text-[6px] rounded-full font-black border border-white animate-bounce" style={{ fontFamily: '"Press Start 2P", monospace' }}>
+                              AQUÍ
+                            </span>
+                          )}
+                          <span className="relative z-10">{isUnlocked ? world.icono : '🔒'}</span>
+                        </button>
+                      </div>
+
+                      {/* Floating Label */}
+                      <div className="absolute top-1/2 -translate-y-1/2 left-24 pl-2 whitespace-nowrap z-20 flex flex-col pointer-events-none">
+                        <span className="text-[11px] font-black text-text" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
+                          Mundo {i + 1}
+                        </span>
+                        <span className="text-[9px] text-muted-foreground font-semibold">
+                          {world.nombre}
+                        </span>
+                      </div>
                     </div>
-                    
-                    {/* Tooltip-like label */}
-                    <div className="absolute -bottom-8 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap bg-card px-2 py-1 rounded border text-xs font-bold pointer-events-none z-20" style={{ borderColor: world.color, color: 'var(--rpg-text)' }}>
-                      Mundo {i+1}: {world.nombre}
-                    </div>
-                  </button>
+                  </div>
                 )
               })}
             </div>

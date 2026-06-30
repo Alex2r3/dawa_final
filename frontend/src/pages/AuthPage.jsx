@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Mail, Lock, User, Loader2, Sword, Shield, Star, Zap, Map, Scroll } from 'lucide-react'
+import GoogleLoginButton from '../components/ui/GoogleLoginButton'
 
 // ─── Validation Schemas ───────────────────────────────────────────────────────
 const loginSchema = z.object({
@@ -180,7 +181,7 @@ export default function AuthPage({ defaultMode = 'login' }) {
   const [mode, setMode]         = useState(defaultMode)
   const [error, setError]       = useState('')
   const [transitioning, setTransitioning] = useState(false)
-  const { login, register: authRegister } = useAuth()
+  const { login, register: authRegister, loginWithGoogle } = useAuth()
   const navigate = useNavigate()
   const isLogin  = mode === 'login'
 
@@ -202,9 +203,18 @@ export default function AuthPage({ defaultMode = 'login' }) {
     }, 400)
   }
 
+  const startMusicIfAllowed = () => {
+    if (window.ambientAudio && localStorage.getItem('cq_music_muted') !== 'true') {
+      window.ambientAudio.play().catch((err) => {
+        console.log('Interaction playback failed or blocked:', err)
+      })
+    }
+  }
+
   const onSubmit = async (values) => {
     try {
       setError('')
+      startMusicIfAllowed()
       if (isLogin) {
         await login(values.email, values.password)
       } else {
@@ -214,6 +224,21 @@ export default function AuthPage({ defaultMode = 'login' }) {
     } catch (err) {
       setError(err.response?.data?.error || (isLogin ? 'Credenciales incorrectas' : 'Error al registrar'))
     }
+  }
+
+  const handleGoogleSuccess = async (credential) => {
+    try {
+      setError('')
+      startMusicIfAllowed()
+      await loginWithGoogle(credential)
+      navigate('/')
+    } catch (err) {
+      setError(err.response?.data?.error || 'Error al iniciar sesión con Google')
+    }
+  }
+
+  const handleGoogleError = (errMessage) => {
+    setError(errMessage || 'Error al conectar con Google')
   }
 
   const sparkles = [
@@ -267,7 +292,6 @@ export default function AuthPage({ defaultMode = 'login' }) {
                 <div className="field-group">
                   <label className="field-label">🎫 ID de Entrenador (Email)</label>
                   <div className="field-wrap">
-                    <Mail size={15} className="field-icon" />
                     <input
                       {...register('email')}
                       id="login-email"
@@ -283,7 +307,6 @@ export default function AuthPage({ defaultMode = 'login' }) {
                 <div className="field-group">
                   <label className="field-label">🔑 Contraseña Secreta</label>
                   <div className="field-wrap">
-                    <Lock size={15} className="field-icon" />
                     <input
                       {...register('password')}
                       id="login-password"
@@ -308,14 +331,18 @@ export default function AuthPage({ defaultMode = 'login' }) {
                 </button>
               </form>
 
+              <div className="auth-oauth-divider">
+                <span className="divider-text">O continúa con</span>
+              </div>
+
+              <GoogleLoginButton onSuccess={handleGoogleSuccess} onError={handleGoogleError} text="signin_with" />
+
               <div className="auth-switch">
                 <span>¿Primera vez en CodeRealm?</span>
                 <button id="go-to-register" onClick={switchMode} className="switch-link green">
                   ✨ Únete a la Quest
                 </button>
               </div>
-
-
             </div>
           ) : (
             /* REGISTER side art */
@@ -381,7 +408,6 @@ export default function AuthPage({ defaultMode = 'login' }) {
                 <div className="field-group">
                   <label className="field-label">⚔️ Nombre de Entrenador</label>
                   <div className="field-wrap">
-                    <User size={15} className="field-icon" />
                     <input
                       {...register('username')}
                       id="reg-username"
@@ -396,7 +422,6 @@ export default function AuthPage({ defaultMode = 'login' }) {
                 <div className="field-group">
                   <label className="field-label">🎫 Email</label>
                   <div className="field-wrap">
-                    <Mail size={15} className="field-icon" />
                     <input
                       {...register('email')}
                       id="reg-email"
@@ -412,7 +437,6 @@ export default function AuthPage({ defaultMode = 'login' }) {
                 <div className="field-group">
                   <label className="field-label">🔑 Contraseña</label>
                   <div className="field-wrap">
-                    <Lock size={15} className="field-icon" />
                     <input
                       {...register('password')}
                       id="reg-password"
@@ -428,7 +452,6 @@ export default function AuthPage({ defaultMode = 'login' }) {
                 <div className="field-group">
                   <label className="field-label">🛡️ Confirmar Contraseña</label>
                   <div className="field-wrap">
-                    <Shield size={15} className="field-icon" />
                     <input
                       {...register('confirm')}
                       id="reg-confirm"
@@ -453,6 +476,12 @@ export default function AuthPage({ defaultMode = 'login' }) {
                 </button>
               </form>
 
+              <div className="auth-oauth-divider">
+                <span className="divider-text">O continúa con</span>
+              </div>
+
+              <GoogleLoginButton onSuccess={handleGoogleSuccess} onError={handleGoogleError} text="signup_with" />
+
               <div className="auth-switch">
                 <span>¿Ya eres un aventurero?</span>
                 <button id="go-to-login" onClick={switchMode} className="switch-link blue">
@@ -463,6 +492,7 @@ export default function AuthPage({ defaultMode = 'login' }) {
           )}
         </div>
       </div>
+
 
       {/* Bottom watermark */}
       <div className="auth-footer">
