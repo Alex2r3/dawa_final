@@ -16,6 +16,9 @@ const errorHandler      = require('./middlewares/errorHandler');
 
 const app = express();
 
+// ── Trust Proxy para Vercel ───────────────────────────────
+app.set('trust proxy', 1);
+
 // ── Security ──────────────────────────────────────────────
 app.use(helmet());
 app.use(cors({
