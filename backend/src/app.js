@@ -69,10 +69,12 @@ app.use('*', (req, res) => {
 app.use(errorHandler);
 
 // ── Start ─────────────────────────────────────────────────
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`\n🚀 CodeQuest API running on http://localhost:${PORT}`);
-  console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}\n`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3001;
+  app.listen(PORT, () => {
+    console.log(`\n🚀 CodeQuest API running on http://localhost:${PORT}`);
+    console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}\n`);
+  });
+}
 
 module.exports = app;
