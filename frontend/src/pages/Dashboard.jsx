@@ -12,6 +12,13 @@ const LEVEL_XP = [0, 100, 250, 500, 800, 1200, 1800, 2500, 4000, 6000, 10000]
 function xpForLevel(nivel)     { return LEVEL_XP[Math.min(nivel - 1, LEVEL_XP.length - 1)] ?? 0 }
 function xpForNextLevel(nivel) { return LEVEL_XP[Math.min(nivel, LEVEL_XP.length - 1)] ?? LEVEL_XP[LEVEL_XP.length - 1] }
 
+function calculateLevelFromXP(xp) {
+  for (let i = LEVEL_XP.length - 1; i >= 0; i--) {
+    if (xp >= LEVEL_XP[i]) return i + 1;
+  }
+  return 1;
+}
+
 // Pixel section label component
 function RpgLabel({ children }) {
   return (
@@ -46,10 +53,10 @@ export default function Dashboard() {
   const coinsRef = useGsapCounter(user?.monedas)
 
   const currentXP  = user?.xp_total  || 0
-  const nivel      = user?.nivel      || 1
+  const nivel      = calculateLevelFromXP(currentXP) // Calcula el nivel real basado en el XP
   const xpStart    = xpForLevel(nivel)
   const xpEnd      = xpForNextLevel(nivel)
-  const xpProgress = currentXP - xpStart
+  const xpProgress = Math.max(0, currentXP - xpStart)
   const xpNeeded   = xpEnd - xpStart
   const stats      = statsData || {}
 
