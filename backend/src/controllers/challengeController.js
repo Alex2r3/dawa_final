@@ -61,6 +61,18 @@ exports.answerChallenge = async (req, res, next) => {
     const is_correct =
       answer.trim().toLowerCase() === challenge.respuesta_correcta.trim().toLowerCase();
 
+    // Check if previously answered correctly
+    const { data: prevCorrect } = await supabase
+      .from('attempts')
+      .select('id')
+      .eq('user_id', userId)
+      .eq('challenge_id', id)
+      .eq('is_correct', true)
+      .limit(1)
+      .maybeSingle();
+      
+    const already_answered_correctly = !!prevCorrect;
+
     // Record attempt
     await supabase.from('attempts').insert({
       user_id: userId,
@@ -76,30 +88,33 @@ exports.answerChallenge = async (req, res, next) => {
     let new_nivel    = null;
 
     if (is_correct) {
-      const dif = challenge.levels?.dificultad || 'facil';
-      xp_earned    = XP_MAP[dif]    || 10;
-      coins_earned = COINS_MAP[dif] || 5;
+      // ONLY award XP and coins if it's the first time they get this challenge right
+      if (!already_answered_correctly) {
+        const dif = challenge.levels?.dificultad || 'facil';
+        xp_earned    = XP_MAP[dif]    || 10;
+        coins_earned = COINS_MAP[dif] || 5;
 
-      // Speed bonus: if answered in < 5 seconds, +5 XP
-      if (time_taken && time_taken < 5) xp_earned += 5;
+        // Speed bonus: if answered in < 5 seconds, +5 XP
+        if (time_taken && time_taken < 5) xp_earned += 5;
 
-      // Update user XP and coins
-      const { data: currentUser } = await supabase
-        .from('users')
-        .select('xp_total, nivel, monedas')
-        .eq('id', userId)
-        .single();
+        // Update user XP and coins
+        const { data: currentUser } = await supabase
+          .from('users')
+          .select('xp_total, nivel, monedas')
+          .eq('id', userId)
+          .single();
 
-      if (currentUser) {
-        const new_xp     = currentUser.xp_total + xp_earned;
-        const new_coins  = currentUser.monedas   + coins_earned;
-        new_nivel        = calculateNivel(new_xp);
+        if (currentUser) {
+          const new_xp     = currentUser.xp_total + xp_earned;
+          const new_coins  = currentUser.monedas   + coins_earned;
+          new_nivel        = calculateNivel(new_xp);
 
-        await supabase.from('users').update({
-          xp_total: new_xp,
-          monedas:  new_coins,
-          nivel:    new_nivel,
-        }).eq('id', userId);
+          await supabase.from('users').update({
+            xp_total: new_xp,
+            monedas:  new_coins,
+            nivel:    new_nivel,
+          }).eq('id', userId);
+        }
       }
 
       // Update user_progress for the level
